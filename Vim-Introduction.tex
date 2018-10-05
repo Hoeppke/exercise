@@ -1,0 +1,218 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[utf8x]{inputenc}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath,amssymb,amstext,mathabx}
+\usepackage{amsthm,lipsum}
+\usepackage{amsthm}
+\usepackage{appendix}
+\usepackage{caption}
+\usepackage{diagbox}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{mathabx}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{parcolumns}
+\usepackage{pdfpages}
+\usepackage{pgfplotstable}
+\usepackage{pstricks-add}
+\usepackage{relsize}
+\usepackage{subcaption}
+\usepackage{tcolorbox}
+\usepackage{verbatim}
+%End of imports
+%\colorlet{notgreen}{blue!50!yellow}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{jwbluedark}{HTML}{4f81bd}
+\definecolor{jwbluelight}{HTML}{dbe5f1}
+\newcommand{\mybox}[1]{\par\noindent\colorbox{jwbluelight}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{#1}}}
+\newcommand{\TODO}[1]{\ifture\colorbox{red}{TODO} \fi}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\del}{\partial}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\rarr}{\rightarrow}
+
+\makeatletter
+\def\thm@space@setup{%
+    \thm@preskip=1.5cm
+  \thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+%\floatname{algorithm}{Algorithmus}
+%\floatstyle{plain}
+%\renewcommand*\listalgorithmname{ }
+%\restylefloat{table}
+%Definiere Saetze ung Definitionen:
+\newtheorem{defi}{Definition}[section]
+\newtheorem{gleichung}{Equation}[section]
+\newtheorem{satz}{Theorem}[section]
+\newtheorem{corr}{Corollary}[section]
+\newtheorem{bsp}{Example}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{propo}{Theorem}[section]
+\newtheorem{bem}{Note}[section]
+%Titel Author
+\author{Christoph Höppke}
+\date{\today}
+%\newcommand{\pasteimg}[2]{}
+
+
+%CustomColors:
+\definecolor{Syellow}{HTML}{B58900} \definecolor{Sorange}{HTML}{CB4b16}
+\definecolor{Sred}{HTML}{DC322F} \definecolor{Smagenta}{HTML}{D33682}
+\definecolor{Sviolet}{HTML}{6C71C4} \definecolor{Sblue}{HTML}{268BD2}
+\definecolor{Scyan}{HTML}{2AA198} \definecolor{Sgreen}{HTML}{859900}
+
+
+\begin{document}
+\pagestyle{empty}
+\begin{center} \vspace{4ex}
+    \rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt} % Thick horizontal line
+    \rule{\textwidth}{0.4pt}\\[\baselineskip]  % Thin horizontal
+    \large{Oxford, \today}\\ \vspace{2ex}
+    \textbf{\Large{Induction Talks}}\\
+    \rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt} % Thin horizontal line
+    \rule{\textwidth}{1.6pt}\\[\baselineskip] % Thick horizontal
+    \vspace{2ex}
+\end{center}
+\vfill
+\begin{flushright}
+    \begin{minipage}[h]{0.3\textwidth}
+        \begin{normalsize}
+            Christoph M. Hoeppke\\
+            D.Phil Mathematics\\
+            InFoMM CDT\\
+            University of Oxford\\
+            christoph.hoeppke@maths.ox.ac.uk
+        \end{normalsize}
+    \end{minipage}
+\end{flushright}
+\pagebreak
+%\maketitle \newpage
+\newpage
+\tableofcontents
+\newpage
+\pagestyle{plain}
+\setcounter{page}{1}
+%\setcounter{section}{-1}
+\section{Why use Version Control}
+Version control is better than mailing files back and forth.
+Nothing that is committed is lost and you can track changes.
+
+\subsection{What can it be used for}%
+\label{sub:what_can_it_be_used_for}
+Use git for:
+\begin{itemize}
+    \item Code
+    \item Papers
+    \item Presentations
+    \item Grant applications
+\end{itemize}
+
+Git is the latest and greatest version control software. A lot of people are
+starting to use Git / Version control.
+Developt in 2005 by the Linux development community for the Linux kernel
+project.
+Features:
+\begin{itemize}
+    \item Branching and merging
+    \item Fast
+    \item Distributed (This distinguishes git from its main competitor
+        Subversion)
+    \item Flexible staging area
+    \item Free and open source
+    \item Good tutorials
+\end{itemize}
+
+From the readme of the source code:
+The name git was given by Linus Torvalds.
+
+\section{What is a repository}%
+\label{sec:what_is_a_repository}
+
+A repository is a series of commits.
+Each commit contains snapshots of the files that are added along with timing,
+author and other information. As well as the commits, branch pointers show the
+progress of different branches. The working directory is simply the current set
+of files in the user's local directory. The staging area is where new edits are
+added in preparation for creating new commit. The working directory is just the
+content of a directory on the current users hard disk.
+
+\subsection{Creating a Repository}%
+\label{sub:creating_a_repository}
+
+Normally you wold work with a remote repository. you can import this into your
+current directory using the clone command.\\
+\begin{indent}
+    git clone <remote repository> <local dir>
+\end{indent}\\
+
+Use git add to add a change in the working directory to the staging ares. All
+changes or new files need to be added to the staging area before they can be
+committed.
+
+\indent git add <file>\\
+\indent git add <directory>
+
+\subsection{Sending commits to a Repository}%
+\label{sub:sending_commits_to_a_repository}
+\indent git push origin <branch>
+
+\subsection{Examining the history}%
+\label{sub:examining_the_history}
+\indent git log --online\\
+\indent git checkout <commit>
+The git checkout command sets the head pointer the given commit pointer.\\
+\indent git checkout master\\
+To exit the status where you are not pointing at a branch head use the git
+checkout master command.\\
+\indent git status\\
+To see the current status of git.
+
+\subsection{Branching}%
+\label{sub:branching}
+Branching can be used to:
+\begin{itemize}
+    \item Create / try out a new feature
+    \item Provide conflict-free parallel editing for multiple users.
+\end{itemize}
+
+How to create a branch:\\
+\indent git checkout -b <branch>\\
+\indent git commit -asm ``added wow new featre''
+
+\subsection{Merging}%
+\label{sub:merging}
+
+When we have two separate branches, but what if we want to merge them
+together?\\
+\indent git chekcout master\\
+\indent git merge branch\\
+In the case that there is a merge conflict, git will let you handle the merge
+conflict. Once you are done you may commit the merged result.
+
+\section{Additional resources}%
+\label{sec:additional_resources}
+
+\begin{itemize}
+    \item Git book: Createive commons Attribution-NonCommercial software.
+\end{itemize}
+
+
+
+\indent git commit -asm ``merges branch into master''
+
+
+
+\end{document}
